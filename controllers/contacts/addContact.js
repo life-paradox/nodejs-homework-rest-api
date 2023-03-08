@@ -1,14 +1,9 @@
 const contactsModule = require('../../models/contacts');
 
-const Joi = require('joi');
-
-const contactSchema = Joi.object({
-  name: Joi.string().trim().required(),
-  email: Joi.string().email().trim().required(),
-  phone: Joi.string().min(3).required(),
-});
+const { contactSchema } = require('../../schemes/validationSchema');
 
 const addContact = async (req, res, next) => {
+  console.log(contactSchema);
   try {
     console.log(req.body);
     const { error } = contactSchema.validate(req.body);

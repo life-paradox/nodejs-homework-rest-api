@@ -1,16 +1,11 @@
 const contactsModule = require('../../models/contacts');
 const createError = require('http-errors');
-const Joi = require('joi');
 
-const contactsSchema = Joi.object({
-  name: Joi.string().trim().required(),
-  email: Joi.string().email().trim().required(),
-  phone: Joi.string().min(3).required(),
-});
+const { contactSchema } = require('../../schemes/validationSchema');
 
 const updateContact = async (req, res, next) => {
   try {
-    const { error } = contactsSchema.validate(req.body);
+    const { error } = contactSchema.validate(req.body);
     if (error) {
       error.status = 400;
       throw error;
