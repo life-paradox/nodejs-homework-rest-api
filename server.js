@@ -5,16 +5,15 @@ mongoose.set('strictQuery', true);
 require('dotenv').config();
 
 const DB = process.env.MONGO_URL;
-const Port = process.env.PORT;
-console.log(DB);
+const PORT = process.env.PORT;
 mongoose
   .connect(DB, {
     usenewurlparser: true,
     useunifiedtopology: true,
   })
   .then(() => {
-    app.listen(Port);
-    console.log(`Server running. Use our API on port: ${Port}`);
+    app.listen(PORT);
+    console.log(`Server running. Use our API on port: ${PORT}`);
   })
   .catch(error => {
     console.log(`Can't connect to database, ${error}`);
