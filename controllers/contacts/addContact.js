@@ -1,25 +1,13 @@
-const contactsModule = require('../../models/contacts');
-
-const { contactSchema } = require('../../schemes/validationSchema');
+const { Contact } = require('../../models/contact');
+const createError = require('http-errors');
 
 const addContact = async (req, res, next) => {
   try {
-    console.log(req.body);
-    const { error } = contactSchema.validate(req.body);
-    if (error) {
-      error.status = 400;
-      throw error;
+    const result = await Contact.create(req.body);
+    if (!result) {
+      throw createError[404]();
     }
-    console.log(req.body);
-    const result = await contactsModule.addContact(req.body);
-
-    res.status(201).json({
-      status: 'success',
-      code: 201,
-      data: {
-        result,
-      },
-    });
+    res.status(201).json(result);
   } catch (error) {
     next(error);
   }
